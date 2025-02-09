@@ -1,7 +1,7 @@
 [project]
 name = "poetry-setuptools-scm-support"
 requires-python = ">=3.10, <3.12"
-version = "0.0.1"
+version = "0.0.2"
 license = "MIT"
 description = ""
 authors = [
@@ -13,6 +13,10 @@ dependencies = [
     "cleo (>=2.1.0,<3.0.0)",
     "poetry (>=2.0.1,<3.0.0)"
 ]
+
+[project.urls]
+Repository = "https://github.com/laxertu/poetry-setuptools-scm-support"
+Issues = "https://github.com/laxertu/poetry-setuptools-scm-support/issues"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
