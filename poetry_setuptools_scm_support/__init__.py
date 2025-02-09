@@ -1,16 +1,9 @@
-import json
-
 from cleo.commands.command import Command
 from poetry.plugins.application_plugin import ApplicationPlugin
 from poetry.factory import Factory
 
-from setuptools_scm import Version, Configuration
+from setuptools_scm import Configuration
 from setuptools_scm._get_version_impl import _get_version
-
-from cleo.io.io import IO
-
-from poetry.plugins.plugin import Plugin
-from poetry.poetry import Poetry
 
 
 class CalculateVersion(Command):
