@@ -5,7 +5,7 @@ from poetry.factory import Factory
 
 from setuptools_scm import Configuration, ScmVersion
 from setuptools_scm._get_version_impl import _get_version, parse_scm_version
-from setuptools_scm.version import guess_next_dev_version, guess_next_version, guess_next_date_ver
+from setuptools_scm.version import guess_next_date_ver
 
 class CalculateVersion(Command):
     """
@@ -50,8 +50,11 @@ class CalculateVersion(Command):
             v = self.__do_inc(c)
         else:
             self.line_error(f"Unknown format: {format_to_use}")
-        poetry.pyproject.data.item('project').update(version=v)
-        poetry.pyproject.file.write(poetry.pyproject.data)
+
+        confirm = self.ask(f'Dumping version "{v}" [YES / no]', 'YES')
+        if confirm == "YES":
+            poetry.pyproject.data.item('project').update(version=v)
+            poetry.pyproject.file.write(poetry.pyproject.data)
 
         return 0
 
