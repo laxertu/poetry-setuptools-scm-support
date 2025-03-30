@@ -18,7 +18,7 @@ class CalculateVersion(Command):
     description = "Calculates the version of the package relying on setuptools_scm"
 
     args_description = """
-        scm: formats according to setuptools_scm default bahavior.
+        scm: formats according to setuptools_scm default behavior.
         date: formats using last commit distance and dirty tag
     """
     arguments = [
@@ -38,6 +38,16 @@ class CalculateVersion(Command):
             fmt="{guessed}.dev{distance}+{node}",
         )
 
+    def __do_distance(self, c: Configuration) -> str:
+        scm_version: ScmVersion = parse_scm_version(c)
+
+        return scm_version.format_next_version(
+            guess_next_date_ver,
+            date_fmt="%Y.%m.%d",
+            fmt="{guessed}.dev{distance}",
+        )
+
+
     def handle(self) -> int:
         poetry = Factory().create_poetry()
         c = Configuration.from_file(str(poetry.file))
@@ -46,10 +56,13 @@ class CalculateVersion(Command):
         format_to_use = self.argument("format")
         if format_to_use == "scm":
             v = self.__do_default(c)
+        elif format_to_use == "dist":
+            v = self.__do_distance(c)
         elif format_to_use == "date":
             v = self.__do_inc(c)
         else:
             self.line_error(f"Unknown format: {format_to_use}")
+            return 0
 
         confirm = self.ask(f'Dumping version "{v}" [YES / no]', 'YES')
         if confirm == "YES":
