@@ -3,8 +3,8 @@ from cleo.io.inputs.argument import Argument
 from poetry.plugins.application_plugin import ApplicationPlugin
 from poetry.factory import Factory
 
-from setuptools_scm import Configuration, ScmVersion
-from setuptools_scm._get_version_impl import _get_version, parse_scm_version
+from setuptools_scm import Configuration, ScmVersion, get_version
+from setuptools_scm._get_version_impl import parse_scm_version
 from setuptools_scm.version import guess_next_date_ver
 
 import warnings
@@ -24,9 +24,9 @@ class CalculateVersion(Command):
     description = "Calculates the version of the package relying on setuptools_scm"
 
     args_description = """
-        scm: formats according to setuptools_scm default behavior.
-        date: formats using last commit distance and dirty tag
-        dist: formats using last commit distance only
+        scm: formats according to setuptools_scm default behavior. e.g. 0.1.dev1+g1e0ede4
+        date: formats using last commit distance and dirty tag, e.g. 2025.3.31.1.dev1+g1e0ede4
+        dist: formats using last commit distance only, e.g. 2025.3.31.1.dev1
     """
     arguments = [
         Argument(name="format", description=args_description, default="scm", required=False),
@@ -34,7 +34,7 @@ class CalculateVersion(Command):
 
 
     def __do_default(self, c: Configuration) -> str:
-        return _get_version(c)
+        return get_version(root=c.root, relative_to=c.relative_to)
 
     def __do_inc(self, c: Configuration) -> str:
         scm_version: ScmVersion = parse_scm_version(c)
