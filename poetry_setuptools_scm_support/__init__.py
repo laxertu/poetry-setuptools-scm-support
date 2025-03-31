@@ -20,6 +20,7 @@ class CalculateVersion(Command):
     args_description = """
         scm: formats according to setuptools_scm default behavior.
         date: formats using last commit distance and dirty tag
+        dist: formats using last commit distance only
     """
     arguments = [
         Argument(name="format", description=args_description),
@@ -51,7 +52,6 @@ class CalculateVersion(Command):
     def handle(self) -> int:
         poetry = Factory().create_poetry()
         c = Configuration.from_file(str(poetry.file))
-        v = self.__do_default(c)
 
         format_to_use = self.argument("format")
         if format_to_use == "scm":
