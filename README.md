@@ -9,7 +9,7 @@ Versions are calculated taking into account the distance between current commit 
 examples:
 
     poetry version-calculate
-0.1.dev1+g1e0ede4
+1.0.1.dev1+g1e0ede4
 
     poetry version-calculate date
 2025.4.1.1.dev1+g1e0ede4

@@ -4,7 +4,7 @@ from poetry.plugins.application_plugin import ApplicationPlugin
 from poetry.factory import Factory
 
 from setuptools_scm import Configuration, get_version
-from setuptools_scm.version import guess_next_date_ver
+from setuptools_scm.version import guess_next_date_ver, calver_by_date
 
 import warnings
 
@@ -24,7 +24,7 @@ class CalculateVersion(Command):
 
     args_description = """
         scm: formats according to setuptools_scm default behavior. e.g. 0.1.dev1+g1e0ede4
-        date: formats using last commit distance and dirty tag, e.g. 2025.3.31.1+g1e0ede4
+        date: formats current date and distance, e.g. 2025.4.1.1.dev1+g9d4edec
     """
     arguments = [
         Argument(name="format", description=args_description, default="scm", required=False),
@@ -37,7 +37,7 @@ class CalculateVersion(Command):
     def __do_date_and_dirty(self, c: Configuration) -> str:
 
         # fmt="{guessed}.dev{distance}+{node}"
-        return get_version(root=c.root, relative_to=c.relative_to, version_scheme=guess_next_date_ver)
+        return get_version(root=c.root, relative_to=c.relative_to, version_scheme=calver_by_date)
 
 
 
