@@ -14,3 +14,12 @@ examples:
     poetry version-calculate date
 2025.4.1.1.dev1+g1e0ede4
 
+**Note about date format:**
+
+Two digits year is taken by default, you can change this behaviour making a previous git tag with a different supporten format, in this case for example 
+
+    git tag 2025.4.1
+ 
+
+
+
