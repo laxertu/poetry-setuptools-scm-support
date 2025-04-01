@@ -2,14 +2,17 @@ A Poetry plugin that integrates setuptools_scm <https://pypi.org/project/setupto
 
 Updates pyproject.toml file version with a calculated one
 
-The idea is to add a mechanism for managing dev builds' versions guaranteeing uniqueness of them at deploy time  
+The idea is to add a mechanism for managing dev builds' versions guaranteeing uniqueness of them at deploy time.
 
-usage:
+Versions are calculated taking into account the distance between current commit and last tagged one, and current commit revision hash
 
-    poetry version-calculate [scm:date]
-        scm: Formats according to setuptools_scm default behavior
-        date: Formats versions as date. Result format is {guessed}.dev{distance}+{node}, date format is Y.m.d
-        dist: Same as date, but without dirty tag
+examples:
 
-See setuptools_scm documentation and project sources for details
+    poetry version-calculate
+0.1.dev1+g1e0ede4
 
+    poetry version-calculate date
+2025.4.1.1.dev1+g1e0ede4
+
+    poetry version-calculate dist
+2025.4.1.1.dev1
