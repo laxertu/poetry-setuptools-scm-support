@@ -23,9 +23,9 @@ class CalculateVersion(Command):
     description = "Calculates the version of the package relying on setuptools_scm"
 
     args_description = """
-        scm: formats according to setuptools_scm get_version default behavior. e.g. 0.1.dev1+g1e0ede4.
-        date: formats current date and distance, e.g. 2025.4.1.1.dev1+g9d4edec . Scheme used is calver_by_date function
-        branch: Use branch based versioning of library. Scheme used is release_branch_semver_version function
+        scm: formats according to setuptools_scm <info>get_version</info> default behavior. e.g. 0.1.dev1+g1e0ede4.
+        date: formats current date and distance, e.g. 2025.4.1.1.dev1+g9d4edec . Scheme used is <info>calver_by_date</info> function
+        branch: Use branch based versioning of library. Scheme used is <info>release_branch_semver_version</info> function
     """
     arguments = [
         Argument(name="format", description=args_description, default="scm", required=False),
@@ -58,10 +58,11 @@ class CalculateVersion(Command):
                 self.line_error(f"Unknown format: {format_to_use}")
                 return 0
 
-            confirm = self.ask(f'Dumping version "{v}" [Y/n]', 'Y')
+            confirm = self.ask(f'Bumping version "{v}" [Y/n]', 'Y')
             if confirm == "Y":
                 poetry.pyproject.data.item('project').update(version=v)
                 poetry.pyproject.file.write(poetry.pyproject.data)
+
 
             return 0
 
