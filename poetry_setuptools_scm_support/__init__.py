@@ -20,11 +20,11 @@ class CalculateVersion(Command):
     """
 
     name = "version-calculate"
-    description = "Calculates the version of the package relying on setuptools_scm"
+    description = "Calculates the version of the project relying on setuptools_scm"
 
     args_description = """
-        scm: formats according to setuptools_scm <info>get_version</info> default behavior. e.g. 0.1.dev1+g1e0ede4.
-        date: formats current date and distance, e.g. 2025.4.1.1.dev1+g9d4edec . Scheme used is <info>calver_by_date</info> function
+        scm: formats according to setuptools_scm <info>get_version</info> default behavior. e.g. <info>0.1.dev1+g1e0ede4</info>.
+        date: formats current date and distance, e.g. <info>2025.4.1.1.dev1+g9d4edec</info> . Scheme used is <info>calver_by_date</info> function
         branch: Use branch based versioning of library. Scheme used is <info>release_branch_semver_version</info> function
     """
     arguments = [
@@ -62,7 +62,7 @@ class CalculateVersion(Command):
             if confirm == "Y":
                 poetry.pyproject.data.item('project').update(version=v)
                 poetry.pyproject.file.write(poetry.pyproject.data)
-
+                self.line(f"Version changed to {v}")
 
             return 0
 
