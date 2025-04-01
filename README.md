@@ -14,5 +14,3 @@ examples:
     poetry version-calculate date
 2025.4.1.1.dev1+g1e0ede4
 
-    poetry version-calculate dist
-2025.4.1.1.dev1
