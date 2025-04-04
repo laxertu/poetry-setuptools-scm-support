@@ -28,7 +28,13 @@ Ouputs something like 1.0.1.dev1+g1e0ede4
 Two digits year is taken by default, you can change this behaviour making a previous git tag with a different supporten format, in this case for example 
 
     git tag 2025.4.1
- 
+
+**Set default format**
+
+You can configure default format by adding the following entry (the example sets date format)
+
+    [tool.poetry-setuptools-scm-support]
+    default-format = "date"
 
 
 

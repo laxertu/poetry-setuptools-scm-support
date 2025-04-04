@@ -33,7 +33,7 @@ class CalculateVersion(Command):
         branch: Use branch based versioning of library. Scheme used is <info>release_branch_semver_version</info> function
     """
     arguments = [
-        Argument(name="format", description=args_description, default="scm", required=False),
+        Argument(name="format", description=args_description, default="default", required=False),
     ]
 
 
@@ -87,7 +87,18 @@ class CalculateVersion(Command):
 
             c = Configuration.from_file(str(poetry.file))
 
+
+            """
+            [tool.poetry-setuptools-scm-support]
+            default-format = "date"
+            """
+
             format_to_use = self.argument("format")
+
+            if format_to_use == "default":
+                option = poetry.pyproject.data.get("tool", {}).get("poetry-setuptools-scm-support", {})
+                format_to_use = option.get("default-format", "scm")
+
             if format_to_use == "scm":
                 v = self.__do_scm(c)
             elif format_to_use == "date":
