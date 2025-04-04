@@ -45,6 +45,19 @@ class CalculateVersion(Command):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             poetry = Factory().create_poetry()
+
+            if poetry.pyproject.data.item('tool').get('setuptools_scm') is None:
+                ok = self.ask('No tool.setuptools_scm entry found in <info>pyproject.toml</info>. Would you like to add it? [Y/n]', 'Y')
+                if ok == 'Y':
+                    poetry.pyproject.data.item('tool').update(setuptools_scm={})
+                    self.line("Updating tool.setuptools_scm configuration")
+                    poetry.pyproject.file.write(poetry.pyproject.data)
+                    self.line("Done")
+
+                else:
+                    self.line("Aborting")
+                    return 0
+
             c = Configuration.from_file(str(poetry.file))
 
             format_to_use = self.argument("format")
