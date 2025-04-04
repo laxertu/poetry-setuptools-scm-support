@@ -1,3 +1,4 @@
+import tomlkit
 from cleo.commands.command import Command
 from cleo.io.inputs.argument import Argument
 from poetry.plugins.application_plugin import ApplicationPlugin
@@ -7,6 +8,10 @@ from setuptools_scm import Configuration, get_version
 from setuptools_scm.version import calver_by_date, release_branch_semver_version
 
 import warnings
+
+from tomlkit.exceptions import NonExistentKey
+from tomlkit.items import Item
+from tomlkit import item
 
 def fxn():
     warnings.warn("deprecated", UserWarning)
@@ -46,17 +51,39 @@ class CalculateVersion(Command):
             warnings.simplefilter("ignore")
             poetry = Factory().create_poetry()
 
-            if poetry.pyproject.data.item('tool').get('setuptools_scm') is None:
+            ok_tool_section = True
+            ok_tool_section_setuptools_scm = True
+
+            try:
+                _ = poetry.pyproject.data.item('tool')
+                if poetry.pyproject.data.item('tool').get('setuptools_scm') is None:
+                    ok_tool_section_setuptools_scm = False
+
+            except (NonExistentKey, KeyError):
+                ok_tool_section = False
+
+            if ok_tool_section_setuptools_scm and ok_tool_section:
+                pass
+            else:
                 ok = self.ask('No tool.setuptools_scm entry found in <info>pyproject.toml</info>. Would you like to add it? [Y/n]', 'Y')
                 if ok == 'Y':
+                    if not ok_tool_section:
+                        self.line("Adding section to <info>pyproject.toml</info>.")
+                        poetry.pyproject.data.add('tool', tomlkit.item({}))
+                    self.line("Updating section <info>pyproject.toml</info>.")
                     poetry.pyproject.data.item('tool').update(setuptools_scm={})
-                    self.line("Updating tool.setuptools_scm configuration")
+
                     poetry.pyproject.file.write(poetry.pyproject.data)
                     self.line("Done")
 
                 else:
                     self.line("Aborting")
                     return 0
+
+            if poetry.pyproject.data.item('tool').get('setuptools_scm') is None:
+                ok = self.ask('No tool.setuptools_scm entry found in <info>pyproject.toml</info>. Would you like to add it? [Y/n]', 'Y')
+                if ok == 'Y':
+                    poetry.pyproject.data.add('tool')
 
             c = Configuration.from_file(str(poetry.file))
 
