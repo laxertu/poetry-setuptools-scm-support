@@ -10,6 +10,11 @@ Supported schemes are the main ones exposed by setuptools-scm:
 **date**: formats current date and distance, e.g. **2025.4.1.1.dev1+g9d4edec** . Scheme used is calver_by_date function     
 **branch**: Use branch based versioning of library. Scheme used is release_branch_semver_version function     
 
+Prerequisites of projects using this plugin:
+
+* A [tool.setuptools_scm] section declared
+* A git tag with your starting version if different from default one is recommended
+
 examples:
 
     poetry version-calculate
