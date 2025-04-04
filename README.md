@@ -1,4 +1,4 @@
-A Poetry plugin that integrates setuptools_scm <https://pypi.org/project/setuptools-scm/> to console
+A Poetry plugin that integrates [setuptools-scm](https://pypi.org/project/setuptools-scm/) to console
 
 Updates pyproject.toml file version with a calculated one
 
