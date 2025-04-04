@@ -6,9 +6,9 @@ Versions are calculated taking into account the distance between current commit 
 
 Supported schemes are the main ones exposed by setuptools-scm:
 
-**scm**: formats according to setuptools_scm get_version default behavior. e.g. 0.1.dev1+g1e0ede4.
-**date**: formats current date and distance, e.g. 2025.4.1.1.dev1+g9d4edec . Scheme used is calver_by_date function
-**branch**: Use branch based versioning of library. Scheme used is release_branch_semver_version function
+**scm**: formats according to setuptools_scm get_version default behavior. e.g. **0.1.dev1+g1e0ede4**    
+**date**: formats current date and distance, e.g. **2025.4.1.1.dev1+g9d4edec** . Scheme used is calver_by_date function     
+**branch**: Use branch based versioning of library. Scheme used is release_branch_semver_version function     
 
 examples:
 
