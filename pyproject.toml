@@ -1,13 +1,14 @@
 [project]
 name = "poetry-setuptools-scm-support"
 requires-python = ">=3.10, <3.13"
-version = "0.5.6.1"
+version = "0.5.6.2"
 license = "MIT"
-description = ""
+description = "A Poetry plugin that integrates setuptools-scm "
 authors = [
-    {name = "luca",email = "laxertu@gmail.com"}
+    {name = "Luca Stretti",email = "laxertu@gmail.com"}
 ]
 readme = "README.md"
+keywords = ["poetry", "plugin", "setuptools-scm"]
 dependencies = [
     "setuptools-scm (>=8.1.0,<9.0.0)",
     "cleo (>=2.1.0,<3.0.0)",
