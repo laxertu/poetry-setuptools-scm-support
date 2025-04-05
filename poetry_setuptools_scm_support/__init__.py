@@ -28,9 +28,10 @@ class CalculateVersion(Command):
     description = "Calculates the version of the project relying on setuptools_scm"
 
     args_description = """
-        scm: formats according to setuptools_scm <info>get_version</info> default behavior. e.g. <info>0.1.dev1+g1e0ede4</info>.
-        date: formats current date and distance, e.g. <info>2025.4.1.1.dev1+g9d4edec</info> . Scheme used is <info>calver_by_date</info> function
+        scm: Formats according to setuptools_scm <info>get_version</info> default behavior. e.g. <info>0.1.dev1+g1e0ede4</info>.
+        date: Formats current date and distance, e.g. <info>2025.4.1.1.dev1+g9d4edec</info> . Scheme used is <info>calver_by_date</info> function
         branch: Use branch based versioning of library. Scheme used is <info>release_branch_semver_version</info> function
+        default: Use project plugin configuration (see documentation) or scm if not defined.
     """
     arguments = [
         Argument(name="format", description=args_description, default="default", required=False),
@@ -80,19 +81,7 @@ class CalculateVersion(Command):
                     self.line("Aborting")
                     return 0
 
-            if poetry.pyproject.data.item('tool').get('setuptools_scm') is None:
-                ok = self.ask('No tool.setuptools_scm entry found in <info>pyproject.toml</info>. Would you like to add it? [Y/n]', 'Y')
-                if ok == 'Y':
-                    poetry.pyproject.data.add('tool')
-
             c = Configuration.from_file(str(poetry.file))
-
-
-            """
-            [tool.poetry-setuptools-scm-support]
-            default-format = "date"
-            """
-
             format_to_use = self.argument("format")
 
             if format_to_use == "default":
