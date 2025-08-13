@@ -1,5 +1,7 @@
 A Poetry plugin that integrates [setuptools-scm](https://pypi.org/project/setuptools-scm/) to console
 
+[![PyPI Downloads](https://static.pepy.tech/badge/poetry-setuptools-scm-support)](https://pepy.tech/projects/poetry-setuptools-scm-support)
+
 Updates pyproject.toml file version with a calculated one
 
 Versions are calculated taking into account the distance between current commit and last tagged one, and current commit revision hash
